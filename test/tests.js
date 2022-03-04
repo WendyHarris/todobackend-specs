@@ -1,5 +1,5 @@
-var chai = require('chai'),
-    should = chai.should,
+var chai = require('chai');
+    should = chai.should(),
     expect = chai.expect,
     Promise = require('bluebird'),
     request = require('superagent-promise')(require('superagent'), Promise),
@@ -12,7 +12,7 @@ describe('Cross Origin Requests', function() {
 
     before(function() {
         result = request('OPTIONS', url)
-        .set('Origin', 'http://someplace.com')
+        .set('Origin', '*')
         .end(); 
     });
 
