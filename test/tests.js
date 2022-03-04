@@ -29,6 +29,36 @@ describe('Cross Origin Requests', function() {
     });
 });
 
+
+describe('Create Todo Item', function() {
+    var result;
+
+    before(function() {
+        result = post(url, { title: 'Walk the dog' });
+    });
+
+    it('should return a 201 CREATED response', function() {
+        return assert(result, "status").to.equal(201); 
+    });
+
+    it('should receive a location hyperlink', function() {
+        return assert(result, 'header.location').to.match(/^https::\/\/.+todos\/[\d]+$/);
+    });
+
+    it('should create the item', function() {
+        var item = result.then(function(res) {
+            return get(res.header['location']);
+        });
+
+        return assert(item, "body.title").that.equals('Walk the dog');
+    });
+
+    after(function() {
+        return del(url);
+    });
+});
+
+
 function post(url, data) {
     return request.post(url)
     .set('Content-Type', 'application/json')
