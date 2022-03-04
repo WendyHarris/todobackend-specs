@@ -58,6 +58,42 @@ describe('Create Todo Item', function() {
     });
 });
 
+describe('Update Todo Item', function() {
+    var location;
+
+    beforeEach(function(done) {
+        post(url, {title: 'Walk the dog'}).then(function(res) {
+            location = res.header['location'];
+            done();
+        });
+    });
+
+    it('should have completed set to true after PUT updated', function() {
+        var result = update(location, 'PUT', {'completed': true});
+        return assert(result, "body.completed").to.be.true;
+    });
+
+    it('should have completed set to true after PATCH update', function() {
+        var result = update(location, 'PATCH', {'completed': true});
+        return assert(result, "body.completed".to.be.true)
+    });
+
+    after(function() {
+        return del(url);
+    });
+});
+
+describe('Delete Todo Item', function() {
+    var location;
+
+    beforeEach(function(done) {
+        post(url, {title: 'Walk the dog'}).then(function(res) {
+            location = res.header['location'];
+            done();
+        });
+    });
+
+    it
 
 function post(url, data) {
     return request.post(url)
