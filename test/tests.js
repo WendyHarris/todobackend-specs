@@ -93,7 +93,19 @@ describe('Delete Todo Item', function() {
         });
     });
 
-    it
+    it('should return a 204 NO CONTENT response', function() {
+        var result = del(location);
+        return assert(result, "status").to.equal(204);
+    });
+
+    it('should delete the item', function() {
+        var result = del(location).then(function (res) {
+            return get(location);
+        });
+        return expect(result).to.eventually.be.rejectedWith('Not Found');
+    });
+});
+
 
 function post(url, data) {
     return request.post(url)
