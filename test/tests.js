@@ -1,4 +1,4 @@
-import assert from 'assert'; 
+var assert = require('assert');
 
 var chai = require('chai');
     should = chai.should(),
