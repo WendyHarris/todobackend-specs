@@ -1,3 +1,5 @@
+import assert from 'assert'; 
+
 var chai = require('chai');
     should = chai.should(),
     expect = chai.expect,
@@ -12,7 +14,7 @@ describe('Cross Origin Requests', function() {
 
     before(function() {
         result = request('OPTIONS', url)
-        .set('Origin', '*')
+        .set('Origin', 'http://someplace.com')
         .end(); 
     });
 
