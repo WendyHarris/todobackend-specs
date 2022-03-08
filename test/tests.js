@@ -1,10 +1,9 @@
-var assert = require('assert');
-
 var chai = require('chai');
-    should = chai.should(),
+    should = chai.should,
     expect = chai.expect,
     Promise = require('bluebird'),
-    request = require('superagent-promise')(require('superagent'), Promise),
+    
+    request = require('superagent-bluebird-promise')(require('superagent'), Promise),
     chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var url = process.env.URL || 'http://localhost:8000/todos';
@@ -26,7 +25,7 @@ describe('Cross Origin Requests', function() {
         ]);
     });
 
-    it('should allow all origins', function() {
+    it('should allow all origins', async () => {
         return assert(result, "header.access-control-allow-origin").to.equal('*');
     });
 });
@@ -52,7 +51,7 @@ describe('Create Todo Item', function() {
             return get(res.header['location']);
         });
 
-        return assert(item, "body.title").that.equals('Walk the dog');
+        return assert(item, 'body.title').that.equals('Walk the dog');
     });
 
     after(function() {
@@ -77,7 +76,7 @@ describe('Update Todo Item', function() {
 
     it('should have completed set to true after PATCH update', function() {
         var result = update(location, 'PATCH', {'completed': true});
-        return assert(result, "body.completed".to.be.true)
+        return assert(result, "body.completed").to.be.true;
     });
 
     after(function() {
